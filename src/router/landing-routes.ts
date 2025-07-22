@@ -33,6 +33,15 @@ export const landingRoutes: RouteRecordRaw[] = [
         },
       },
       {
+        path: 'periodic-table-review',
+        name: 'periodic-table-review',
+        component: () => import('@/modules/landing/view/PeriodicTableReview.vue'),
+        meta: {
+          landing: true,
+          label: 'Repaso de la Tabla Periódica',
+        },
+      },
+      {
         path: 'how-it-works',
         name: 'how-it-works',
         component: () => import('@/modules/landing/view/HowItWorks.vue'),
