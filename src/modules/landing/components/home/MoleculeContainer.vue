@@ -7,7 +7,6 @@ import { onMounted, ref } from 'vue'
 import { useThemeStore } from '@/stores'
 
 const moleculeContainer = ref<HTMLDivElement | null>(null)
-const theme = useThemeStore()
 
 function loadMolecule() {
   if (!moleculeContainer.value) return
@@ -16,8 +15,6 @@ function loadMolecule() {
   const offset = new THREE.Vector3()
 
   let scene = new THREE.Scene()
-  const color = theme.isDarkMode ? 0x000000 : 0xffffff
-  scene.background = new THREE.Color(color)
 
   // Luces (mejoradas para visibilidad)
   const ambientLight = new THREE.AmbientLight(0xcccccc, 0.5) // Luz ambiental más suave
@@ -28,7 +25,7 @@ function loadMolecule() {
   scene.add(directionalLight)
 
   let camera = new THREE.PerspectiveCamera(
-    75,
+    40,
     moleculeContainer.value.clientWidth / moleculeContainer.value.clientHeight,
     0.1,
     5000, // Aumentar far para ver objetos más lejanos si es necesario
@@ -52,7 +49,7 @@ function loadMolecule() {
   moleculeContainer.value.appendChild(labelRenderer.domElement)
 
   let controls = new TrackballControls(camera, renderer.domElement)
-  controls.minDistance = 500
+  controls.minDistance = 700
   controls.maxDistance = 2000
 
   // **Función interna para cargar la molécula (definida una vez)**
@@ -154,6 +151,9 @@ function loadMolecule() {
 
   function animate() {
     requestAnimationFrame(animate)
+    const time = Date.now() * 0.0004
+    root.rotation.x = time
+    root.rotation.y = time * 0.7
     controls.update()
     render()
   }
@@ -177,8 +177,8 @@ onMounted(() => {
 <template>
   <div class="mt-4">
     <div class="relative">
-      <div ref="moleculeContainer" class="overflow-hidden rounded-3xl w-full h-80"></div>
+      <div ref="moleculeContainer" class="rounded-3xl w-full h-80"></div>
     </div>
-    <p class="text-center mt-2">Molécula interactiva de Cafeína</p>
+    <p class="text-center mt-2 dark:text-neutral-300">Molécula interactiva de Cafeína</p>
   </div>
 </template>
