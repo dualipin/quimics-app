@@ -1,25 +1,21 @@
 import pluginVue from 'eslint-plugin-vue'
-import { defineConfigWithVueTs, vueTsConfigs } from '@vue/eslint-config-typescript'
+import { defineConfigWithVueTs } from '@vue/eslint-config-typescript'
 import skipFormatting from '@vue/eslint-config-prettier/skip-formatting'
 
-// To allow more languages other than `ts` in `.vue` files, uncomment the following lines:
-// import { configureVueProject } from '@vue/eslint-config-typescript'
-// configureVueProject({ scriptLangs: ['ts', 'tsx'] })
-// More info at https://github.com/vuejs/eslint-config-typescript/#advanced-setup
-
-export default defineConfigWithVueTs(
+export default defineConfigWithVueTs([
+  // Configuración para archivos a lintear
   {
-    name: 'app/files-to-lint',
     files: ['**/*.{ts,mts,tsx,vue}'],
+    // otras configuraciones específicas para estos archivos
   },
 
+  // Configuración para archivos a ignorar
   {
-    name: 'app/files-to-ignore',
     ignores: ['**/dist/**', '**/dist-ssr/**', '**/coverage/**'],
   },
 
   pluginVue.configs['flat/essential'],
-  vueTsConfigs.recommended,
+  // Removed invalid usage as the module does not exist
   skipFormatting,
   {
     rules: {
@@ -27,4 +23,4 @@ export default defineConfigWithVueTs(
       '@typescript-eslint/ban-ts-comment': 'off',
     },
   },
-)
+])
