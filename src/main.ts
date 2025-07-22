@@ -1,21 +1,20 @@
 import './assets/main.css'
 import 'aos/dist/aos.css'
-import 'vuestic-ui/styles/essential.css'
-import 'vuestic-ui/styles/typography.css'
-import 'material-design-icons-iconfont/dist/material-design-icons.min.css'
 
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import { createVuestic } from 'vuestic-ui'
+import ppps from 'pinia-plugin-persistedstate'
 
 import App from './App.vue'
 import router from './router'
 
 const app = createApp(App)
 
-app.use(createPinia())
+const pinia = createPinia()
+pinia.use(ppps)
+
+app.use(pinia)
 app.use(router)
-app.use(createVuestic({ config: {} }))
 
 app.mount('#app')
 
