@@ -68,29 +68,25 @@ onMounted(() => {
     textShadow: '0px 0px 10px rgba(0, 0, 100, 0.5)',
     color: '#ff5722',
     scale: 1.2,
-    // onComplete: () => {
-    //   // clean up the split text instance to avoid memory leaks
-    //   split.revert()
-    // },
+    onComplete: () => {
+      split.revert()
+    },
   })
 })
 </script>
 
 <template>
   <section
-    class="pt-20 sm:pt-0 py-12 md:py-20 min-h-dvh relative grid place-content-center overflow-hidden"
+    class="relative grid min-h-dvh place-content-center overflow-hidden py-12 pt-20 sm:pt-0 md:py-20"
   >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="text-center">
         <div ref="heroTitle">
           <h1
-            class="text-4xl tracking-tight font-extrabold text-gray-900 dark:text-gray-100 sm:text-5xl md:text-6xl"
+            class="text-4xl font-extrabold tracking-tight text-gray-900 sm:text-5xl md:text-6xl dark:text-gray-100"
           >
-            <span class="block text-shadow-xs">Aprende Química</span>
-            <span
-              id="hero-title"
-              class="mx-auto mt-2 text-black dark:text-white chemistry-rotate inline-block"
-            >
+            <span class="text-shadow-xs block">Aprende Química</span>
+            <span id="hero-title" class="chemistry-rotate mx-auto mt-2 inline-block">
               Jugando
             </span>
           </h1>
@@ -98,7 +94,7 @@ onMounted(() => {
 
         <div ref="heroSubtitle">
           <p
-            class="mt-3 max-w-md mx-auto text-base text-gray-500 dark:text-gray-300 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
+            class="mx-auto mt-3 max-w-md text-base text-gray-500 sm:text-lg md:mt-5 md:max-w-3xl md:text-xl dark:text-gray-300"
           >
             Descubre la química a través de desafíos interactivos, recompensas y aventuras
             moleculares
@@ -111,12 +107,12 @@ onMounted(() => {
       </div>
 
       <!-- Contenedor de botones con ref correcto -->
-      <div class="mt-8 md:mt-12 flex flex-col sm:flex-row justify-center gap-4 px-4">
+      <div class="mt-8 flex flex-col justify-center gap-4 px-4 sm:flex-row md:mt-12">
         <button
           @click="$router.push({ name: 'auth.register' })"
-          class="animate-delay-200 animate-slide-up-fade px-8 py-4 rounded-full bg-gradient-to-r from-indigo-600 to-green-500 text-white font-bold hover:scale-105 transform transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+          class="animate-delay-200 animate-slide-up-fade flex transform items-center justify-center gap-2 rounded-full bg-gradient-to-r from-indigo-600 to-green-500 px-8 py-4 font-bold text-white shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path
               stroke-linecap="round"
               stroke-linejoin="round"
@@ -144,13 +140,13 @@ onMounted(() => {
 
       <div class="mt-8 text-center">
         <div
-          class="inline-flex items-center gap-2 bg-indigo-100 dark:bg-indigo-900/30 px-4 py-2 rounded-full"
+          class="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-2 dark:bg-indigo-900/30"
         >
           <span class="relative flex h-3 w-3">
             <span
               class="animate-pulsing animate-iteration-count-infinite absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"
             ></span>
-            <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+            <span class="relative inline-flex h-3 w-3 rounded-full bg-green-500"></span>
           </span>
           <span class="text-sm text-indigo-600 dark:text-indigo-300"
             >+{{ estudiantesCount }} estudiantes gamificando</span
@@ -160,12 +156,12 @@ onMounted(() => {
     </div>
 
     <!-- Elementos decorativos gamificados -->
-    <div class="inset-0 absolute w-full overflow-hidden dark:bg-black bg-white -z-10">
+    <div class="absolute inset-0 -z-10 w-full overflow-hidden bg-white dark:bg-black">
       <!-- Burbujas químicas animadas -->
       <span
         v-for="key in 15"
         :key="key"
-        class="chemistry-bubble blur-xl absolute aspect-square"
+        class="chemistry-bubble absolute aspect-square blur-xl"
         :style="{
           height: `${Math.random() * 200 + 50}px`,
           top: `${Math.random() * 100}%`,
@@ -181,7 +177,7 @@ onMounted(() => {
       <!-- Elementos de gamificación flotantes -->
       <template v-for="key in 10" :key="key">
         <div
-          class="absolute w-12 h-12 flex items-center justify-center text-xl"
+          class="absolute flex h-12 w-12 items-center justify-center text-xl"
           :style="{
             top: `${Math.random() * 100}%`,
             left: `${Math.random() * 100}%`,
@@ -197,10 +193,10 @@ onMounted(() => {
 
     <!-- Scroll indicator -->
     <div
-      class="absolute sm:bottom-8 bottom-0 left-1/2 transform -translate-x-1/2 animate-vertical-bounce animate-iteration-count-infinite animate-duration-[2s]"
+      class="animate-vertical-bounce animate-iteration-count-infinite animate-duration-[2s] absolute bottom-0 left-1/2 -translate-x-1/2 transform sm:bottom-8"
     >
       <svg
-        class="w-8 h-8 text-indigo-600 dark:text-indigo-300"
+        class="h-8 w-8 text-indigo-600 dark:text-indigo-300"
         fill="none"
         stroke="currentColor"
         viewBox="0 0 24 24"
