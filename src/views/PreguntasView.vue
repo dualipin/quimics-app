@@ -2,7 +2,7 @@
 import { onMounted, ref, watch } from 'vue'
 import QuestionCard from '@/components/QuestionCard.vue'
 import { useAuthStore } from '@/stores/auth'
-import BurbujasMovimiento from '@/components/BurbujasMovimiento.vue'
+import BurbujasMovimiento from '@/components/MovingBubbles.vue'
 
 const authStore = useAuthStore()
 const currentQuestionIndex = ref(0)
@@ -163,10 +163,10 @@ onMounted(async () => {
 <template>
   <template v-if="loading">
     <div
-      class="fixed inset-0 flex flex-col gap-10 items-center justify-center bg-white dark:bg-black z-50"
+      class="fixed inset-0 z-50 flex flex-col items-center justify-center gap-10 bg-white dark:bg-black"
     >
       <span
-        class="aspect-square w-16 border-2 border-gray-300 dark:border-gray-700 rounded-full animate-spin border-t-transparent"
+        class="aspect-square w-16 animate-spin rounded-full border-2 border-gray-300 border-t-transparent dark:border-gray-700"
       ></span>
       <span class="text-2xl font-bold text-gray-700 dark:text-gray-300">Cargando...</span>
     </div>
@@ -175,13 +175,13 @@ onMounted(async () => {
   <!-- crear preguntas profesor  -->
   <div
     v-if="esProfesor"
-    class="w-full h-full mt-32 max-w-5xl mb-8 p-4 md:p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md mx-auto"
+    class="mx-auto mt-32 mb-8 h-full w-full max-w-5xl rounded-lg bg-white p-4 shadow-md md:p-6 dark:bg-gray-800"
   >
-    <h2 class="text-xl font-bold mb-4 text-center text-gray-800 dark:text-gray-200">
+    <h2 class="mb-4 text-center text-xl font-bold text-gray-800 dark:text-gray-200">
       Crear Nueva Pregunta
     </h2>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+    <div class="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
       <VaInput
         v-model="pregunta.pregunta"
         placeholder="Ingrese la pregunta"
@@ -196,15 +196,15 @@ onMounted(async () => {
       />
     </div>
 
-    <div class="mt-4 border-t border-gray-300 dark:border-gray-600 pt-4">
-      <div class="flex flex-wrap justify-between items-center mb-3">
+    <div class="mt-4 border-t border-gray-300 pt-4 dark:border-gray-600">
+      <div class="mb-3 flex flex-wrap items-center justify-between">
         <label class="font-semibold text-gray-700 dark:text-gray-300">Opciones existentes</label>
         <div class="text-sm text-gray-500 dark:text-gray-400">
           {{ pregunta.opciones.length }} opciones
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 mb-4">
+      <div class="mb-4 grid grid-cols-1 gap-3 md:grid-cols-2">
         <div v-for="(opcion, index) in pregunta.opciones" :key="index" class="flex items-center">
           <VaInput v-model="pregunta.opciones[index]" placeholder="Opción" class="flex-grow" />
           <VaButton
@@ -218,11 +218,11 @@ onMounted(async () => {
         </div>
       </div>
 
-      <div class="flex flex-col sm:flex-row mt-3 mb-4">
+      <div class="mt-3 mb-4 flex flex-col sm:flex-row">
         <VaInput
           v-model="opcion"
           placeholder="Ingrese una nueva opción"
-          class="flex-grow mb-2 sm:mb-0 sm:mr-2"
+          class="mb-2 flex-grow sm:mr-2 sm:mb-0"
         />
         <VaButton
           @click="
@@ -240,7 +240,7 @@ onMounted(async () => {
       </div>
     </div>
 
-    <div class="flex justify-center md:justify-end mt-6">
+    <div class="mt-6 flex justify-center md:justify-end">
       <VaButton @click="crearPregunta" preset="primary" size="large" :loading="loading">
         <VaIcon icon="save" class="mr-2" /> Guardar Pregunta
       </VaButton>
@@ -248,16 +248,16 @@ onMounted(async () => {
   </div>
 
   <!-- juego -->
-  <div v-if="!esProfesor" class="fondo-movimiento relative min-h-dvh bg-transparent flex flex-col">
+  <div v-if="!esProfesor" class="fondo-movimiento relative flex min-h-dvh flex-col bg-transparent">
     <BurbujasMovimiento color="blanco" />
     <!-- opciones pregunta -->
     <div
-      class="z-20 w-full mt-24 items-center justify-center md:justify-end flex-col md:flex-row flex gap-2 md:gap-5 p-2 py-3 md:p-6 bg-white/30 dark:bg-black/30 backdrop-blur-sm shadow-md"
+      class="z-20 mt-24 flex w-full flex-col items-center justify-center gap-2 bg-white/30 p-2 py-3 shadow-md backdrop-blur-sm md:flex-row md:justify-end md:gap-5 md:p-6 dark:bg-black/30"
     >
       <button
         @click="useIA = !useIA"
         :class="useIA ? 'bg-green-500 hover:bg-green-600' : 'bg-red-500 hover:bg-red-600'"
-        class="transition-colors duration-300 text-white font-semibold rounded-lg shadow-md px-6 py-3 flex items-center gap-2"
+        class="flex items-center gap-2 rounded-lg px-6 py-3 font-semibold text-white shadow-md transition-colors duration-300"
       >
         <VaIcon :name="useIA ? 'check_circle' : 'cancel'" class="text-white" />
         <span>{{ useIA ? 'Preguntas con IA activada' : 'Preguntas con IA desactivada' }}</span>
@@ -265,7 +265,7 @@ onMounted(async () => {
 
       <RouterLink
         :to="{ name: 'preguntas-profesor' }"
-        class="transition-colors duration-300 text-white font-semibold rounded-lg shadow-md px-6 py-3 flex items-center justify-center gap-2 bg-blue-500 hover:bg-blue-600"
+        class="flex items-center justify-center gap-2 rounded-lg bg-blue-500 px-6 py-3 font-semibold text-white shadow-md transition-colors duration-300 hover:bg-blue-600"
       >
         <VaIcon name="school" class="text-white" />
         <span>Contestar preguntas de un profesor</span>
@@ -273,7 +273,7 @@ onMounted(async () => {
 
       <!-- Timer display -->
       <div
-        class="transition-colors duration-300 text-white font-semibold rounded-lg shadow-md px-6 py-3 flex items-center gap-2 bg-purple-500"
+        class="flex items-center gap-2 rounded-lg bg-purple-500 px-6 py-3 font-semibold text-white shadow-md transition-colors duration-300"
       >
         <VaIcon name="timer" class="text-white" />
         <span>Tiempo: {{ tiempoRestante }}s</span>
@@ -284,20 +284,20 @@ onMounted(async () => {
     <div class="flex flex-col items-center justify-center px-4 py-8">
       <div
         v-if="!esProfesor"
-        class="w-full max-w-4xl backdrop-blur-sm bg-white/30 dark:bg-black/30 rounded-xl shadow-lg p-6 border border-white/30 dark:border-black/30"
+        class="w-full max-w-4xl rounded-xl border border-white/30 bg-white/30 p-6 shadow-lg backdrop-blur-sm dark:border-black/30 dark:bg-black/30"
       >
-        <div class="w-full z-10">
-          <h1 class="text-3xl font-extrabold text-center mb-6 text-white drop-shadow-md">
+        <div class="z-10 w-full">
+          <h1 class="mb-6 text-center text-3xl font-extrabold text-white drop-shadow-md">
             <span
-              class="bg-gradient-to-r dark:from-purple-300 dark:to-blue-300 from-purple-600 to-blue-500 text-transparent bg-clip-text"
+              class="bg-gradient-to-r from-purple-600 to-blue-500 bg-clip-text text-transparent dark:from-purple-300 dark:to-blue-300"
               >🧪 Quiz de Química</span
             >
           </h1>
 
           <!-- Timer progress bar -->
-          <div class="mb-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+          <div class="mb-4 h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
             <div
-              class="bg-purple-600 h-2.5 rounded-full transition-all duration-1000"
+              class="h-2.5 rounded-full bg-purple-600 transition-all duration-1000"
               :style="{ width: `${(tiempoRestante / tiempoLimite) * 100}%` }"
               :class="{ 'bg-red-600': tiempoRestante <= 10 }"
             ></div>
@@ -306,42 +306,42 @@ onMounted(async () => {
           <template v-if="loading">
             <div class="flex flex-col items-center py-12">
               <span
-                class="aspect-square w-12 border-4 border-blue-300 dark:border-blue-700 rounded-full animate-spin border-t-blue-600 dark:border-t-blue-800"
+                class="aspect-square w-12 animate-spin rounded-full border-4 border-blue-300 border-t-blue-600 dark:border-blue-700 dark:border-t-blue-800"
               ></span>
-              <p class="text-center text-white mt-4 font-medium">Cargando preguntas...</p>
+              <p class="mt-4 text-center font-medium text-white">Cargando preguntas...</p>
             </div>
           </template>
           <template v-else-if="questions.length == 0">
-            <div class="bg-white/40 dark:bg-black/40 rounded-lg p-8 text-center">
+            <div class="rounded-lg bg-white/40 p-8 text-center dark:bg-black/40">
               <VaIcon name="error_outline" size="large" class="mb-3 text-red-500" />
-              <p class="text-center text-gray-800 dark:text-gray-300 font-medium">
+              <p class="text-center font-medium text-gray-800 dark:text-gray-300">
                 No hay preguntas disponibles.
               </p>
             </div>
           </template>
           <template v-else>
-            <div class="transform transition-all hover:scale-[1.01] duration-300">
+            <div class="transform transition-all duration-300 hover:scale-[1.01]">
               <QuestionCard :question="questions[currentQuestionIndex]" :onNext="nextQuestion" />
             </div>
           </template>
         </div>
 
         <div class="mt-6 flex items-center justify-center">
-          <div class="bg-white/50 dark:bg-black/50 px-4 py-2 rounded-full shadow-md">
+          <div class="rounded-full bg-white/50 px-4 py-2 shadow-md dark:bg-black/50">
             <span class="font-medium text-gray-800 dark:text-gray-300">
               Pregunta
-              <span class="text-blue-700 dark:text-blue-400 font-bold">{{
+              <span class="font-bold text-blue-700 dark:text-blue-400">{{
                 currentQuestionIndex + 1
               }}</span>
               de
-              <span class="text-blue-700 dark:text-blue-400 font-bold">{{ questions.length }}</span>
+              <span class="font-bold text-blue-700 dark:text-blue-400">{{ questions.length }}</span>
             </span>
           </div>
         </div>
 
-        <div class="mt-4 w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
+        <div class="mt-4 h-2.5 w-full rounded-full bg-gray-200 dark:bg-gray-700">
           <div
-            class="bg-blue-600 dark:bg-blue-400 h-2.5 rounded-full"
+            class="h-2.5 rounded-full bg-blue-600 dark:bg-blue-400"
             :style="{ width: `${((currentQuestionIndex + 1) / questions.length) * 100}%` }"
           ></div>
         </div>
@@ -350,7 +350,7 @@ onMounted(async () => {
   </div>
 
   <VaModal v-model="showModal" hide-default-actions overlay-opacity="0.2" size="large" class="z-50">
-    <div class="text-center text-lg font-semibold mb-6 text-gray-800 dark:text-gray-300">
+    <div class="mb-6 text-center text-lg font-semibold text-gray-800 dark:text-gray-300">
       <p class="mb-2">¡Gracias por jugar!</p>
       <p>
         Puntuación final: <span class="text-green-500">{{ score }}</span> de
@@ -360,7 +360,7 @@ onMounted(async () => {
 
     <!-- Resultados de las preguntas -->
     <div class="max-h-96 overflow-y-auto p-4">
-      <h3 class="text-xl font-semibold mb-4 border-b pb-2 text-gray-800 dark:text-gray-300">
+      <h3 class="mb-4 border-b pb-2 text-xl font-semibold text-gray-800 dark:text-gray-300">
         Resultados
       </h3>
 
@@ -368,15 +368,15 @@ onMounted(async () => {
       <div
         v-for="(item, index) in answeredQuestions"
         :key="index"
-        class="mb-4 p-3 rounded-lg"
+        class="mb-4 rounded-lg p-3"
         :class="
           item.isCorrect
-            ? 'bg-green-50 border border-green-200 dark:bg-green-900 dark:border-green-700'
-            : 'bg-red-50 border border-red-200 dark:bg-red-900 dark:border-red-700'
+            ? 'border border-green-200 bg-green-50 dark:border-green-700 dark:bg-green-900'
+            : 'border border-red-200 bg-red-50 dark:border-red-700 dark:bg-red-900'
         "
       >
         <div class="flex items-start">
-          <div class="mr-3 mt-1">
+          <div class="mt-1 mr-3">
             <VaIcon
               :name="item.isCorrect ? 'check_circle' : 'cancel'"
               :class="item.isCorrect ? 'text-green-500' : 'text-red-500'"
@@ -388,15 +388,15 @@ onMounted(async () => {
             </p>
             <div class="mt-2 text-sm">
               <p class="flex items-center">
-                <span class="font-semibold mr-2 text-gray-800 dark:text-gray-300"
+                <span class="mr-2 font-semibold text-gray-800 dark:text-gray-300"
                   >Tu respuesta:</span
                 >
                 <span :class="item.isCorrect ? 'text-green-600' : 'text-red-600'">
                   {{ item.isCorrect ? 'Es Correcto' : 'Es Incorrecto' }}
                 </span>
               </p>
-              <p v-if="!item.isCorrect" class="flex items-center mt-1">
-                <span class="font-semibold mr-2 text-gray-800 dark:text-gray-300"
+              <p v-if="!item.isCorrect" class="mt-1 flex items-center">
+                <span class="mr-2 font-semibold text-gray-800 dark:text-gray-300"
                   >Respuesta correcta:</span
                 >
                 <span class="text-green-600">{{ item.correctAnswer }}</span>
