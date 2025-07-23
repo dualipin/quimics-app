@@ -4,6 +4,9 @@ export const gamesRoutes: RouteRecordRaw[] = [
   {
     path: '/games',
     component: () => import('@/layout/GamesLayout.vue'),
+    meta: {
+      requiresAuth: true,
+    },
     children: [
       {
         path: '',
@@ -21,6 +24,7 @@ export const gamesRoutes: RouteRecordRaw[] = [
         name: 'games.memory',
         component: () => import('@/modules/games/modules/memory/views/MemoryGame.vue'),
       },
+
       {
         path: 'lottery',
         name: 'games.lottery',
@@ -28,8 +32,19 @@ export const gamesRoutes: RouteRecordRaw[] = [
       },
       {
         path: 'quiz',
-        name: 'games.quiz',
-        component: () => import('@/modules/games/modules/quiz/views/QuizGame.vue'),
+        component: () => import('@/modules/games/modules/quiz/layouts/QuizLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'games.quiz',
+            component: () => import('@/modules/games/modules/quiz/views/QuizGame.vue'),
+          },
+          {
+            path: 'shop',
+            name: 'games.quiz.shop',
+            component: () => import('@/modules/games/modules/quiz/views/QuizShop.vue'),
+          },
+        ],
       },
     ],
   },

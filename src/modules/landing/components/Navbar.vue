@@ -3,7 +3,7 @@ import ToggleThemeButton from '@/components/ToggleThemeButton.vue'
 import logo from '@/assets/logo/logo.webp'
 import router from '@/router'
 import type { RouteRecordNameGeneric } from 'vue-router'
-import { onMounted, ref, watch } from 'vue'
+import { watch } from 'vue'
 import { HSCollapse } from 'preline/dist'
 
 const allRoutes = router.getRoutes()
@@ -30,23 +30,23 @@ watch(
 
 <template>
   <header
-    class="fixed z-50 animate-fade-in-down top-0 backdrop-blur-sm flex flex-wrap lg:justify-start lg:flex-nowrap w-full bg-white/50 text-sm py-3 dark:bg-black/50"
+    class="animate-fade-in-down fixed top-0 z-50 flex w-full flex-wrap bg-white/50 py-3 text-sm backdrop-blur-sm xl:flex-nowrap xl:justify-start dark:bg-black/50"
   >
     <nav
-      class="max-w-[85rem] w-full mx-auto px-4 flex flex-wrap basis-full items-center justify-between"
+      class="mx-auto flex w-full max-w-[85rem] basis-full flex-wrap items-center justify-between px-4"
     >
       <RouterLink
         to="/"
-        class="lg:order-1 flex-none font-semibold dark:text-white focus:outline-hidden focus:opacity-80"
+        class="flex-none font-semibold focus:opacity-80 focus:outline-hidden xl:order-1 dark:text-white"
         href="#"
       >
-        <img :src="logo" alt="logo app" class="size-10 inline" />
+        <img :src="logo" alt="logo app" class="inline size-10" />
         <span> Studying Chemistry </span>
       </RouterLink>
-      <div class="lg:order-3 flex items-center gap-x-2">
+      <div class="flex items-center gap-x-2 xl:order-3">
         <button
           type="button"
-          class="lg:hidden hs-collapse-toggle relative size-9 flex justify-center items-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-transparent dark:border-neutral-700 dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
+          class="hs-collapse-toggle relative flex size-9 items-center justify-center gap-x-2 rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:bg-gray-50 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 xl:hidden dark:border-neutral-700 dark:bg-transparent dark:text-white dark:hover:bg-white/10 dark:focus:bg-white/10"
           id="hs-navbar-alignment-collapse"
           aria-expanded="false"
           aria-controls="hs-navbar-alignment"
@@ -54,7 +54,7 @@ watch(
           data-hs-collapse="#hs-navbar-alignment"
         >
           <svg
-            class="hs-collapse-open:hidden shrink-0 size-4"
+            class="hs-collapse-open:hidden size-4 shrink-0"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -70,7 +70,7 @@ watch(
             <line x1="3" x2="21" y1="18" y2="18" />
           </svg>
           <svg
-            class="hs-collapse-open:block hidden shrink-0 size-4"
+            class="hs-collapse-open:block hidden size-4 shrink-0"
             xmlns="http://www.w3.org/2000/svg"
             width="24"
             height="24"
@@ -89,27 +89,27 @@ watch(
         <button
           type="button"
           @click="$router.push({ name: 'auth.login' })"
-          class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+          class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-2xs hover:bg-gray-50 focus:bg-gray-50 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
         >
           Acceder
         </button>
         <ToggleThemeButton
-          class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-2xs hover:bg-gray-50 focus:outline-hidden focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+          class="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-2xs hover:bg-gray-50 focus:bg-gray-50 focus:outline-hidden disabled:pointer-events-none disabled:opacity-50 dark:border-neutral-700 dark:bg-neutral-800 dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
         />
       </div>
       <div
         id="hs-navbar-alignment"
-        class="hs-collapse hidden overflow-hidden transition-all duration-300 basis-full grow lg:grow-0 lg:basis-auto lg:block lg:order-2"
+        class="hs-collapse hidden grow basis-full overflow-hidden transition-all duration-300 xl:order-2 xl:block xl:grow-0 xl:basis-auto"
         aria-labelledby="hs-navbar-alignment-collapse"
       >
-        <div class="flex flex-col gap-5 mt-5 lg:flex-row lg:items-center lg:mt-0 lg:ps-5">
+        <div class="mt-5 flex flex-col gap-5 xl:mt-0 xl:flex-row xl:items-center xl:ps-5">
           <router-link
             v-for="(route, i) in routes"
             :aria-current="$route.name == route.name && 'page'"
             :class="
               $route.name !== route.name
-                ? 'font-medium text-gray-600 hover:text-gray-400 focus:outline-hidden focus:text-gray-400 dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500'
-                : 'font-medium text-blue-500 dark:text-blue-400 focus:outline-hidden'
+                ? 'font-medium text-gray-600 hover:text-gray-400 focus:text-gray-400 focus:outline-hidden dark:text-neutral-400 dark:hover:text-neutral-500 dark:focus:text-neutral-500'
+                : 'font-medium text-blue-500 focus:outline-hidden dark:text-blue-400'
             "
             :key="i"
             :to="{ name: route.name }"
