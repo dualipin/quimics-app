@@ -2,18 +2,22 @@
   <motion.div
     :initial="{
       opacity: 0,
-      y: 20,
-      scale: 0.95,
+      y: -20,
+      scale: 0.5,
     }"
     :whileInView="{
       opacity: 1,
       y: 0,
       scale: 1,
     }"
-    :inViewOptions="{ once: true }"
-    class="stat-card p-6 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+    :transition="{
+      duration: 1,
+      ease: 'easeInOut',
+      delay: 0.2,
+    }"
+    class="stat-card rounded-xl border border-white/20 bg-white/10 p-6 backdrop-blur-sm"
   >
-    <div class="text-4xl mb-2">{{ value }}</div>
+    <div class="mb-2 text-4xl">{{ value }}</div>
     <div class="text-sm font-medium">{{ label }}</div>
     <div class="mt-3 text-2xl">{{ icon }}</div>
   </motion.div>
