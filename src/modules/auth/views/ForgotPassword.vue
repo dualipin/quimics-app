@@ -1,36 +1,15 @@
 <script setup lang="ts">
 import { ArrowLeft } from 'lucide-vue-next'
-import { ref } from 'vue'
-import { useRouter } from 'vue-router'
 import MoleculeContainer from '../components/MoleculeContainer.vue'
+import { useRecoveryPassword } from '../composables/useRecoveryPassword'
 
-const router = useRouter()
-const email = ref('')
-const isLoading = ref(false)
-const successMessage = ref('')
-const errorMessage = ref('')
-
-const handleSubmit = () => {
-  if (!email.value) {
-    errorMessage.value = 'Por favor ingresa tu correo electrónico'
-    return
-  }
-
-  isLoading.value = true
-  errorMessage.value = ''
-
-  // Simulación de envío
-  setTimeout(() => {
-    isLoading.value = false
-    successMessage.value = `Hemos enviado un enlace de recuperación a ${email.value}`
-    email.value = ''
-  }, 2000)
-}
+const { errors, isSubmitting, errorMessage, email, onSubmit, message, emailAttr, meta } =
+  useRecoveryPassword()
 </script>
 
 <template>
   <div
-    class="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 dark:from-gray-900 dark:to-black p-4"
+    class="flex min-h-screen items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-4 dark:from-gray-900 dark:to-black"
   >
     <!-- Fondo decorativo -->
     <div class="absolute inset-0 opacity-10 dark:opacity-50">
@@ -42,43 +21,43 @@ const handleSubmit = () => {
 
     <!-- Tarjeta principal -->
     <div
-      class="relative w-full max-w-md bg-white/50 animate-fade-in-up dark:bg-gray-800/50 backdrop-blur-sm rounded-xl shadow-2xl overflow-hidden z-10 transition-all duration-300 hover:shadow-3xl"
+      class="animate-fade-in-up hover:shadow-3xl relative z-10 w-full max-w-md overflow-hidden rounded-xl bg-white/50 shadow-2xl backdrop-blur-sm transition-all duration-300 dark:bg-gray-800/50"
     >
       <!-- Encabezado -->
       <div class="bg-gradient-to-r from-blue-600/50 to-teal-500/50 p-8 text-center">
-        <div class="flex justify-center mb-4">
-          <div class="bg-white/20 p-4 rounded-full backdrop-blur-sm">
+        <div class="mb-4 flex justify-center">
+          <div class="rounded-full bg-white/20 p-4 backdrop-blur-sm">
             <span class="text-3xl">🔑</span>
           </div>
         </div>
         <h1 class="text-2xl font-bold text-white">Recupera tu acceso</h1>
-        <p class="text-blue-100 mt-2">Te ayudaremos a restablecer tu contraseña</p>
+        <p class="mt-2 text-blue-100">Te ayudaremos a restablecer tu contraseña</p>
       </div>
 
       <!-- Formulario -->
-      <form @submit.prevent="handleSubmit" class="p-8 space-y-6">
+      <form @submit.prevent="onSubmit" class="space-y-6 p-8">
         <!-- Mensajes de estado -->
         <div
           v-if="errorMessage"
-          class="p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg flex items-start"
+          class="flex items-start rounded-lg bg-red-100 p-3 text-red-700 dark:bg-red-900/30 dark:text-red-300"
         >
           <span class="mr-2">⚠️</span>
           <span>{{ errorMessage }}</span>
         </div>
 
         <div
-          v-if="successMessage"
-          class="p-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 rounded-lg flex items-start"
+          v-if="message"
+          class="flex items-start rounded-lg bg-green-100 p-3 text-green-700 dark:bg-green-900/30 dark:text-green-300"
         >
           <span class="mr-2">✅</span>
-          <span>{{ successMessage }}</span>
+          <span>{{ message }}</span>
         </div>
 
         <!-- Campo de email -->
         <div>
           <label
             for="email"
-            class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+            class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
             Correo electrónico registrado
           </label>
@@ -87,11 +66,13 @@ const handleSubmit = () => {
               id="email"
               v-model="email"
               type="email"
+              v-bind="emailAttr"
+              :class="{ 'border-red-500': errors.email }"
               placeholder="tucorreo@ejemplo.com"
               required
-              class="w-full px-4 py-3 pl-10 rounded-lg border border-gray-300 dark:border-gray-600 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white transition-all"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 pl-10 transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white"
             />
-            <span class="absolute left-3 top-3.5 text-gray-400 dark:text-gray-500">✉️</span>
+            <span class="absolute top-3.5 left-3 text-gray-400 dark:text-gray-500">✉️</span>
           </div>
           <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">
             Ingresa el correo asociado a tu cuenta para recibir instrucciones
@@ -101,15 +82,15 @@ const handleSubmit = () => {
         <!-- Botón de envío -->
         <button
           type="submit"
-          :disabled="isLoading"
-          class="w-full flex items-center justify-center py-3 px-4 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white font-medium rounded-lg shadow-md transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-70 disabled:pointer-events-none"
+          :disabled="isSubmitting || !meta.valid"
+          class="flex w-full transform items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 px-4 py-3 font-medium text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:from-blue-700 hover:to-teal-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
         >
-          <template v-if="!isLoading">
+          <template v-if="!isSubmitting">
             <span class="mr-2">📨</span> Enviar enlace de recuperación
           </template>
           <template v-else>
             <svg
-              class="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+              class="animate-spin-clockwise animate-iteration-count-infinite mr-3 -ml-1 h-5 w-5 text-white"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
@@ -133,10 +114,10 @@ const handleSubmit = () => {
         </button>
 
         <!-- Enlace para volver a login -->
-        <div class="text-center pt-4">
+        <div class="pt-4 text-center">
           <router-link
             :to="{ name: 'auth.login' }"
-            class="text-sm text-blue-600 flex justify-center items-center hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+            class="flex items-center justify-center gap-2 text-sm text-blue-600 transition-colors hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
           >
             <arrow-left /> Volver al inicio de sesión
           </router-link>
@@ -144,11 +125,12 @@ const handleSubmit = () => {
       </form>
 
       <!-- Mensaje de seguridad -->
-      <div class="px-8 pb-6 bg-gray-50 dark:bg-gray-700/30">
-        <div class="flex items-start p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-          <span class="mr-2 text-blue-500 dark:text-blue-400">ℹ️</span>
-          <p class="text-xs text-blue-700 dark:text-blue-300">
-            Por seguridad, el enlace de recuperación expirará en 1 hora y solo podrá usarse una vez.
+      <div class="bg-gray-50 px-4 py-2 dark:bg-gray-700/30">
+        <div
+          class="flex items-start justify-center gap-2 rounded-lg bg-blue-50 p-3 dark:bg-blue-900/20"
+        >
+          <span class="text-blue-500 dark:text-blue-400">ℹ️</span>
+          <p class="my-auto text-xs text-blue-700 dark:text-blue-300">
             Si no recibes el correo, revisa tu carpeta de spam.
           </p>
         </div>

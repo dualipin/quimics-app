@@ -42,3 +42,9 @@ export const UserSchema = BaseUserSchema.extend({
 }).strict()
 
 export type TUserSchema = z.infer<typeof UserSchema>
+
+export const RecoverUserSchema = z.object({
+  email: z.string().email({ message: 'Correo electrónico inválido' }),
+})
+
+export type TRecoverUserSchema = z.infer<typeof RecoverUserSchema>

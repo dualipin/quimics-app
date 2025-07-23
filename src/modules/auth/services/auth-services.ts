@@ -34,10 +34,9 @@ export async function registerUser(userData: TUserRegisterSchema): Promise<TUser
 
 export async function recoverPassword(email: string): Promise<string> {
   try {
-    await api.post(`${AUTH_URL}/recover`, { email })
-    return 'Password recovery email sent.'
+    return (await api.post(`${AUTH_URL}/recover`, { email })).data.message
   } catch (error) {
     console.error(error)
-    throw new Error('Password recovery failed.')
+    throw new Error('Error al recuperar la contraseña.')
   }
 }
