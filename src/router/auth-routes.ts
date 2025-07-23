@@ -4,7 +4,12 @@ export const authRoutes: RouteRecordRaw[] = [
   {
     path: '/auth',
     component: () => import('@/layout/AuthLayout.vue'),
+
     children: [
+      {
+        path: '',
+        redirect: { name: 'auth.login' },
+      },
       {
         path: 'login',
         name: 'auth.login',
