@@ -31,7 +31,6 @@ export const useRegisterUser = () => {
 
   const onSubmit = handleSubmit(async (values) => {
     isSubmitting.value = true
-    console.log('Submitting registration:', values)
     try {
       const response = await registerUser({
         email: email.value,
