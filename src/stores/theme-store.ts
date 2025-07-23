@@ -1,39 +1,56 @@
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 
 export const useThemeStore = defineStore(
   'theme',
   () => {
-    const matchMedia = window.matchMedia('(prefers-color-scheme: dark)')
+    const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)')
 
-    const isDarkMode = ref(false)
+    const isDarkMode = ref(prefersDarkScheme.matches)
+
+    const applyThemeToDocument = (isDark: boolean) => {
+      document.documentElement.classList.toggle('dark', isDark)
+    }
 
     const toggleTheme = () => {
       isDarkMode.value = !isDarkMode.value
-      document.documentElement.classList.toggle('dark', isDarkMode.value)
+      applyThemeToDocument(isDarkMode.value)
     }
 
     const setDarkMode = (value: boolean) => {
       isDarkMode.value = value
-      document.documentElement.classList.toggle('dark', value)
-      document.documentElement.classList.toggle('light', !value)
+      applyThemeToDocument(value)
     }
 
-    const handleTheme = (e: MediaQueryListEvent) => {
-      setDarkMode(e.matches)
+    const handleSystemThemeChange = (e: MediaQueryListEvent) => {
+      isDarkMode.value = e.matches
     }
 
-    function listenToChange() {
-      setDarkMode(isDarkMode.value)
-      matchMedia.addEventListener('change', handleTheme)
+    function listenToSystemChanges() {
+      prefersDarkScheme.addEventListener('change', handleSystemThemeChange)
     }
+
+    function stopListeningToSystemChanges() {
+      prefersDarkScheme.removeEventListener('change', handleSystemThemeChange)
+    }
+
+    watch(
+      isDarkMode,
+      (newValue) => {
+        applyThemeToDocument(newValue)
+      },
+      { immediate: true },
+    )
 
     return {
       isDarkMode,
       toggleTheme,
       setDarkMode,
-      listenToChange,
+      listenToSystemChanges,
+      stopListeningToSystemChanges,
     }
   },
-  { persist: true },
+  {
+    persist: true,
+  },
 )
