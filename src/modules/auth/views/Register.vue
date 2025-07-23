@@ -1,83 +1,23 @@
 <script setup lang="ts">
-import BurbujasMovimiento from '@/components/BurbujasMovimiento.vue'
-import api from '@/services/api'
-import { ref } from 'vue'
+import MovingBubbles from '@/components/MovingBubbles.vue'
 import MoleculeContainer from '../components/MoleculeContainer.vue'
+import { useRegisterUser } from '../composables/useRegiterUser'
+import { watch } from 'vue'
 
-async function registrarEstudiante(usuario: string, contrasena: string) {
-  const data = await api.post('/crear_estudiante/', {
-    username: usuario,
-    password: contrasena,
-  })
-
-  return data
-}
-
-async function onSubmit() {
-  submit.value = true
-  function checkUser() {
-    if (username.value.length < 3) {
-      message.value = 'El nombre de usuario debe tener al menos 3 caracteres'
-      console.error('El nombre de usuario debe tener al menos 3 caracteres')
-      return false
-    }
-    if (username.value.length > 20) {
-      console.error('El nombre de usuario no puede tener más de 20 caracteres')
-      message.value = 'El nombre de usuario no puede tener más de 20 caracteres'
-      return false
-    }
-    if (password.value.length < 6) {
-      console.error('La contraseña debe tener al menos 6 caracteres')
-      message.value = 'La contraseña debe tener al menos 6 caracteres'
-      return false
-    }
-    if (password.value.length > 20) {
-      console.error('La contraseña no puede tener más de 20 caracteres')
-      message.value = 'La contraseña no puede tener más de 20 caracteres'
-      return false
-    }
-    if (password.value !== confirmPassword.value) {
-      console.error('Las contraseñas no coinciden')
-      message.value = 'Las contraseñas no coinciden'
-      return false
-    }
-    if (!/^[a-zA-Z0-9]+$/.test(username.value)) {
-      console.error('El nombre de usuario solo puede contener letras y números')
-      message.value = 'El nombre de usuario solo puede contener letras y números'
-      return false
-    }
-    return true
-  }
-
-  if (!checkUser()) {
-    console.error('Error en los datos de registro')
-    submit.value = true
-    return
-  }
-
-  message.value = null
-
-  try {
-    // Simulación de registro
-    submit.value = false
-    const data = await registrarEstudiante(username.value, password.value)
-
-    if (!data) message.value = 'Usuario ya existe'
-    message.value = 'Usuario registrado'
-  } catch (error) {
-    console.error('Error al registrar el usuario:', error)
-    message.value = 'Error al registrar el usuario'
-    submit.value = false
-  }
-}
-
-const username = ref('')
-const email = ref('')
-const password = ref('')
-const confirmPassword = ref('')
-const userType = ref('student')
-const submit = ref(false)
-const message = ref<null | string>('')
+const {
+  confirmPasswordField,
+  email,
+  emailAttr,
+  isSubmitting,
+  meta,
+  onSubmit,
+  password,
+  passwordAttr,
+  isMatchingPassword,
+  role,
+  full_name,
+  full_nameAttr,
+} = useRegisterUser()
 </script>
 
 <template>
@@ -90,57 +30,59 @@ const message = ref<null | string>('')
     </div>
 
     <!-- Burbujas decorativas -->
-    <BurbujasMovimiento color="azul" />
+    <MovingBubbles color="azul" />
 
     <!-- Contenido principal -->
-    <div class="relative z-20 flex items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8">
+    <div
+      class="relative z-20 flex min-h-screen items-center justify-center px-4 py-10 sm:px-6 sm:py-2 lg:px-8"
+    >
       <div
-        class="w-full max-w-md bg-white/50 dark:bg-gray-900/50 backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden transition-all duration-300 hover:shadow-3xl border border-gray-200 dark:border-gray-700 animate-fade-in-up"
+        class="hover:shadow-3xl animate-fade-in-up w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white/50 shadow-2xl backdrop-blur-sm transition-all duration-300 dark:border-gray-700 dark:bg-gray-900/50"
       >
         <!-- Encabezado con gradiente -->
         <div
-          class="bg-gradient-to-r from-blue-600/60 to-teal-500/60 dark:from-blue-900/60 dark:to-teal-800/60 p-6 text-center"
+          class="bg-gradient-to-r from-blue-600/60 to-teal-500/60 p-6 text-center dark:from-blue-900/60 dark:to-teal-800/60"
         >
-          <div class="flex justify-center mb-3">
-            <div class="bg-white/20 p-3 rounded-full">
+          <div class="mb-3 flex justify-center">
+            <div class="rounded-full bg-white/20 p-3">
               <span class="text-2xl">🔬</span>
             </div>
           </div>
           <h2 class="text-2xl font-bold text-white">Únete a nuestra comunidad científica</h2>
-          <p class="text-blue-100 mt-2">Comienza tu viaje de aprendizaje gamificado</p>
+          <p class="mt-2 text-blue-100">Comienza tu viaje de aprendizaje gamificado</p>
         </div>
 
         <!-- Formulario -->
-        <form @submit.prevent="onSubmit" class="p-6 space-y-5">
+        <form @submit.prevent="onSubmit" class="space-y-5 p-6">
           <!-- Tipo de usuario -->
           <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+            <label class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
               ¿Cómo te identificas?
             </label>
             <div class="grid grid-cols-2 gap-3">
               <button
                 type="button"
-                @click="userType = 'student'"
+                @click="role = 'alumno'"
                 :class="{
-                  'bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300':
-                    userType === 'student',
-                  'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600':
-                    userType !== 'student',
+                  'border-blue-500 bg-blue-100 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300':
+                    role === 'alumno',
+                  'border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600':
+                    role !== 'alumno',
                 }"
-                class="flex items-center justify-center p-3 border rounded-lg transition-colors"
+                class="flex items-center justify-center rounded-lg border p-3 transition-colors"
               >
                 <span class="mr-2">🎓</span> Estudiante
               </button>
               <button
                 type="button"
-                @click="userType = 'teacher'"
+                @click="role = 'profesor'"
                 :class="{
-                  'bg-blue-100 border-blue-500 text-blue-700 dark:bg-blue-900/30 dark:border-blue-500 dark:text-blue-300':
-                    userType === 'teacher',
-                  'bg-gray-100 border-gray-300 text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-600':
-                    userType !== 'teacher',
+                  'border-blue-500 bg-blue-100 text-blue-700 dark:border-blue-500 dark:bg-blue-900/30 dark:text-blue-300':
+                    role === 'profesor',
+                  'border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600':
+                    role !== 'profesor',
                 }"
-                class="flex items-center justify-center p-3 border rounded-lg transition-colors"
+                class="flex items-center justify-center rounded-lg border p-3 transition-colors"
               >
                 <span class="mr-2">👩‍🏫</span> Educador
               </button>
@@ -149,7 +91,7 @@ const message = ref<null | string>('')
 
           <!-- Nombre de usuario -->
           <div>
-            <div class="flex justify-between items-center mb-2">
+            <div class="mb-2 flex items-center justify-between">
               <label
                 for="username"
                 class="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -161,13 +103,14 @@ const message = ref<null | string>('')
             <div class="relative">
               <input
                 type="text"
+                v-bind="full_nameAttr"
                 id="username"
-                v-model="username"
+                v-model="full_name"
                 placeholder="Ej. quantum_learner"
                 required
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-all"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               />
-              <span class="absolute right-3 top-3 text-gray-400">✨</span>
+              <span class="absolute top-3 right-3 text-gray-400">✨</span>
             </div>
           </div>
 
@@ -175,23 +118,24 @@ const message = ref<null | string>('')
           <div>
             <label
               for="email"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Correo electrónico
             </label>
             <input
               type="email"
               id="email"
+              v-bind="emailAttr"
               v-model="email"
               placeholder="tucorreo@ejemplo.com"
               required
-              class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-all"
+              class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
             />
           </div>
 
           <!-- Contraseña -->
           <div>
-            <div class="flex justify-between items-center mb-2">
+            <div class="mb-2 flex items-center justify-between">
               <label
                 for="password"
                 class="block text-sm font-medium text-gray-700 dark:text-gray-300"
@@ -205,12 +149,12 @@ const message = ref<null | string>('')
                 type="password"
                 id="password"
                 v-model="password"
+                v-bind="passwordAttr"
                 placeholder="••••••••"
                 required
-                minlength="8"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-all"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               />
-              <span class="absolute right-3 top-3 text-gray-400">🔒</span>
+              <span class="absolute top-3 right-3 text-gray-400">🔒</span>
             </div>
             <div class="mt-2 flex gap-1">
               <div
@@ -218,10 +162,10 @@ const message = ref<null | string>('')
                 :key="i"
                 class="h-1 flex-1 rounded-full"
                 :class="{
-                  'bg-red-400': password.length > 0 && password.length < 4,
-                  'bg-yellow-400': password.length >= 4 && password.length < 8,
-                  'bg-green-400': password.length >= 8,
-                  'bg-gray-200 dark:bg-gray-600': password.length < i * 2,
+                  'bg-red-500': password && password.length < 6 && i <= 1,
+                  'bg-yellow-500': password && password.length >= 6 && i <= 2,
+                  'bg-green-500': isMatchingPassword && i <= 3,
+                  'bg-gray-300': !password || i > 3,
                 }"
               ></div>
             </div>
@@ -231,7 +175,7 @@ const message = ref<null | string>('')
           <div>
             <label
               for="confirm-password"
-              class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+              class="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Confirmar contraseña
             </label>
@@ -239,33 +183,32 @@ const message = ref<null | string>('')
               <input
                 type="password"
                 id="confirm-password"
-                v-model="confirmPassword"
+                v-model="confirmPasswordField"
                 placeholder="••••••••"
                 required
-                minlength="8"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 transition-all"
+                class="w-full rounded-lg border border-gray-300 px-4 py-3 transition-all focus:border-blue-500 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
               />
               <span
-                class="absolute right-3 top-3"
+                class="absolute top-3 right-3"
                 :class="{
-                  'text-green-500': confirmPassword && password === confirmPassword,
-                  'text-red-500': confirmPassword && password !== confirmPassword,
-                  'text-gray-400': !confirmPassword,
+                  'text-green-500': confirmPasswordField && password === confirmPasswordField,
+                  'text-red-500': confirmPasswordField && password !== confirmPasswordField,
+                  'text-gray-400': !confirmPasswordField,
                 }"
               >
-                {{ confirmPassword && password === confirmPassword ? '✓' : '✗' }}
+                {{ confirmPasswordField && password === confirmPasswordField ? '✓' : '✗' }}
               </span>
             </div>
           </div>
 
           <!-- Términos y condiciones -->
-          <div class="flex items-start">
-            <div class="flex items-center h-5">
+          <!-- <div class="flex items-start">
+            <div class="flex h-5 items-center">
               <input
                 id="terms"
                 type="checkbox"
                 required
-                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                class="h-4 w-4 rounded border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
               />
             </div>
             <label for="terms" class="ml-2 text-sm text-gray-600 dark:text-gray-300">
@@ -278,20 +221,20 @@ const message = ref<null | string>('')
                 >Política de Privacidad</a
               >
             </label>
-          </div>
+          </div> -->
 
           <!-- Botón de registro -->
           <button
             type="submit"
-            :disabled="submit"
-            class="w-full flex items-center justify-center py-3 px-4 bg-gradient-to-r from-blue-600 to-teal-500 hover:from-blue-700 hover:to-teal-600 text-white font-bold rounded-lg shadow-md transition-all duration-300 transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 disabled:opacity-70 disabled:pointer-events-none"
+            :disabled="isSubmitting || !isMatchingPassword || !meta.valid"
+            class="flex w-full transform items-center justify-center rounded-lg bg-gradient-to-r from-blue-600 to-teal-500 px-4 py-3 font-bold text-white shadow-md transition-all duration-300 hover:scale-[1.02] hover:from-blue-700 hover:to-teal-600 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2 focus:outline-none disabled:pointer-events-none disabled:opacity-50"
           >
-            <span v-if="!submit" class="flex items-center">
+            <span v-if="!isSubmitting" class="flex items-center">
               <span class="mr-2">🚀</span> Comenzar aventura científica
             </span>
             <span v-else class="flex items-center">
               <svg
-                class="animate-spin -ml-1 mr-2 h-4 w-4 text-white"
+                class="animate-spin-clockwise animate-iteration-count-infinite mr-2 -ml-1 h-4 w-4 text-white"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -313,20 +256,6 @@ const message = ref<null | string>('')
               Creando cuenta...
             </span>
           </button>
-
-          <!-- Mensaje de estado -->
-          <div
-            v-if="message"
-            class="p-3 rounded-lg text-center text-sm"
-            :class="{
-              'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300':
-                message === 'Registro exitoso!',
-              'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300':
-                message !== 'Registro exitoso!',
-            }"
-          >
-            {{ message }}
-          </div>
         </form>
 
         <!-- Enlace a login -->
@@ -335,7 +264,7 @@ const message = ref<null | string>('')
             ¿Ya tienes una cuenta?
             <RouterLink
               :to="{ name: 'auth.login' }"
-              class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300 transition-colors"
+              class="font-medium text-blue-600 transition-colors hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300"
             >
               Inicia sesión aquí
             </RouterLink>

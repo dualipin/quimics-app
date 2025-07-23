@@ -4,7 +4,7 @@ export const BaseUserSchema = z
   .object({
     email: z.string().email({ message: 'Correo electrónico inválido' }),
     full_name: z.string().min(2).max(100),
-    role: z.enum(['user', 'profesor']),
+    role: z.enum(['alumno', 'profesor']).default('alumno'),
   })
   .strict()
 
@@ -13,6 +13,19 @@ export const UserRegisterSchema = BaseUserSchema.extend({
 }).strict()
 
 export type TUserRegisterSchema = z.infer<typeof UserRegisterSchema>
+
+export const UserRegisterFormSchema = UserRegisterSchema.extend({
+  confirmPassword: z
+    .string()
+    .min(6, { message: 'La confirmación de contraseña debe tener al menos 6 caracteres' }), // Solo la validación de longitud aquí
+})
+  // ¡Aplica .refine() al objeto completo para comparar password y confirmPassword!
+  .refine((data) => data.password === data.confirmPassword, {
+    message: 'Las contraseñas no coinciden',
+    path: ['confirmPassword'], // Asocia el error al campo confirmPassword
+  })
+
+export type TUserRegisterFormSchema = z.infer<typeof UserRegisterFormSchema>
 
 export const UserLoginSchema = z
   .object({
