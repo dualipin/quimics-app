@@ -21,8 +21,6 @@ export const useQuizStore = defineStore(
 
     async function loadQuestion() {
       try {
-        await getRandomQuizzes(1) // Fetch a random question to start
-
         if (questions.value.length > 0) {
           questions.value = getQuestionsByCreator(createdBy.value)
           if (questions.value.length === 0) {
@@ -31,6 +29,7 @@ export const useQuizStore = defineStore(
           currentQuestion.value =
             questions.value[Math.floor(Math.random() * questions.value.length)]
         } else {
+          await getRandomQuizzes(1) // Fetch a random question to start
           allQuestions.value = await getAllQuestions()
           createdBy.value = null // Reset creator filter
           questions.value = getQuestionsByCreator(createdBy.value)
