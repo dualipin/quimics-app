@@ -39,11 +39,6 @@ export const gamesRoutes: RouteRecordRaw[] = [
             name: 'games.quiz',
             component: () => import('@/modules/games/modules/quiz/views/QuizGame.vue'),
           },
-          {
-            path: 'shop',
-            name: 'games.quiz.shop',
-            component: () => import('@/modules/games/modules/quiz/views/QuizShop.vue'),
-          },
         ],
       },
     ],
