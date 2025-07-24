@@ -1,20 +1,22 @@
-export interface Question {
-  id: string
-  text: string
-  options: string[]
-  correctAnswer: number
-  explanation: string
-  level: number
-  category: string
-  isAI?: boolean
+export enum QuestionPoints {
+  Easy = 10,
+  Medium = 20,
+  Hard = 30,
 }
 
-export interface ShopItem {
-  id: string
-  name: string
-  description: string
-  price: number
-  type: 'question' | 'hint' | 'powerup'
-  difficulty: 'easy' | 'medium' | 'hard'
-  content?: Question | Question[]
+export enum DifficultyQuestionCost {
+  Easy = 10,
+  Medium = 20,
+  Hard = 30,
+}
+
+export type QuestionDifficulty = 'easy' | 'medium' | 'hard'
+
+export interface Question {
+  id: number
+  question: string
+  options: string[]
+  answer: string
+  difficulty: QuestionDifficulty
+  created_by: 'system' | 'IA' | string
 }
