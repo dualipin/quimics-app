@@ -1,5 +1,7 @@
 <template>
-  <div class="relative overflow-hidden rounded-xl bg-white p-8 shadow-xl dark:bg-gray-800">
+  <div
+    class="animate-sink animate-iteration-count-infinite animate-duration-[2s] relative overflow-hidden rounded-xl bg-white p-8 shadow-xl dark:bg-gray-800"
+  >
     <!-- Elementos decorativos (ya ocultos inicialmente) -->
     <div
       ref="decor1"
