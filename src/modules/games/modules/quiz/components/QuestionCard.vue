@@ -130,6 +130,7 @@ import { storeToRefs } from 'pinia'
 import { useQuizStore } from '../stores/quiz-store'
 import HintButton from './HintButton.vue'
 import gsap from 'gsap'
+import JSConfetti from 'js-confetti'
 
 const quizStore = useQuizStore()
 const { currentQuestion, hasHintAvailable, streakMessage } = storeToRefs(quizStore)
@@ -176,10 +177,47 @@ const difficultyDotClass = computed(() => {
       : 'bg-red-500'
 })
 
+watch(currentQuestion, (newQuestion) => {
+  if (newQuestion) {
+    selectedAnswer.value = null
+    answerSubmitted.value = false
+    isCorrect.value = false
+    hintShown.value = false
+
+    // Reiniciar animaciones
+    gsap.set(
+      [decor1.value, decor2.value, difficultyBadge.value, headerRight.value, questionText.value],
+      {
+        opacity: 0,
+      },
+    )
+    gsap.set(optionButtons.value || [], { opacity: 0 })
+    gsap.set(feedbackBox.value, { opacity: 0 })
+  }
+})
+
 function selectAnswer(option: string) {
   selectedAnswer.value = option
   isCorrect.value = quizStore.answerQuestion(option)
   answerSubmitted.value = true
+
+  const jsConfetti = new JSConfetti()
+
+  if (isCorrect.value) {
+    // Celebración con confeti
+
+    jsConfetti.addConfetti({
+      emojis: ['🎉', '🥳', '✨', '💖'],
+      confettiNumber: 100,
+      emojiSize: 50,
+    })
+  } else {
+    jsConfetti.addConfetti({
+      emojis: ['😕', '❌', '💔', '💩'],
+      confettiNumber: 15,
+      emojiSize: 100,
+    })
+  }
 
   // Animación al seleccionar respuesta
   if (optionButtons.value) {
