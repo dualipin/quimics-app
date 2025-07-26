@@ -102,7 +102,7 @@
             icon="🐍"
             color="from-green-500 to-emerald-600"
             :delay="0.4"
-            @click="navigateTo('culebrita')"
+            @click="$router.push({ name: 'games.snake' })"
           />
 
           <!-- Creación de compuestos -->

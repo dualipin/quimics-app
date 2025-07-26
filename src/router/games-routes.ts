@@ -36,6 +36,11 @@ export const gamesRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/games/modules/lottery/views/Game.vue'),
       },
       {
+        path: 'snake',
+        name: 'games.snake',
+        component: () => import('@/modules/games/modules/snake/views/Snake.vue'),
+      },
+      {
         path: 'quiz',
         component: () => import('@/modules/games/modules/quiz/layouts/QuizLayout.vue'),
         children: [
