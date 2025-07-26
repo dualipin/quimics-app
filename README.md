@@ -35,7 +35,8 @@ npm run dev
 - [x] Loteria: Mas diseño, y que también puedan ganar recompensas, dinero para desbloquear aspectos de fondos o gorritos y recompensas de esa manera.
 - [x] Memorama: Numero de átomo, elemento, que grupo pertenece (12 cartas)
 - [x] Culebrita: Formar grupos de elementos de la tabla periódica con 2 opciones, que aparezcan elementos de 2 grupos, pero tiene que seleccionar 1 de los grupos solicitados, si no pierde, con las recompensas que acumule podrá desbloquear aspectos y mapas.
-- [ ] Creación de compuestos: Darle más animación y mas diseño
+- [x] Creación de compuestos: Darle más animación y mas diseño
+- [x] Visor de moléculas.
 - [ ] Mario broos: Nivel avanzando, formulación de compuestos, que pueda elegir a su jugador en este caso serán los personajes relacionados a la química o creador de la tabla periodica.
 
 

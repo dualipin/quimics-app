@@ -122,7 +122,7 @@
             icon="🔬"
             color="from-yellow-400 to-red-500"
             :delay="0.6"
-            @click="navigateTo('visor')"
+            @click="$router.push({ name: 'games.molecule-viewer' })"
           />
         </div>
       </div>
