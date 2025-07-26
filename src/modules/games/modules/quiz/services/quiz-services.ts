@@ -25,7 +25,7 @@ export async function getAIQuizzes(count: number): Promise<Question[]> {
 
 export async function getAllQuestions() {
   try {
-    const response = await api.get<Question[]>(`${V1_QUIZ_API_URL}`)
+    const response = await api.get<Question[]>(`${V1_QUIZ_API_URL}/`)
     return response.data
   } catch (error) {
     console.error('Error fetching all questions:', error)

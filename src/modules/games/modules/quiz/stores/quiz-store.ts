@@ -30,9 +30,13 @@ export const useQuizStore = defineStore(
             questions.value[Math.floor(Math.random() * questions.value.length)]
         } else {
           await getRandomQuizzes(1) // Fetch a random question to start
-          allQuestions.value = await getAllQuestions()
-          createdBy.value = null // Reset creator filter
-          questions.value = getQuestionsByCreator(createdBy.value)
+          try {
+            allQuestions.value = await getAllQuestions()
+            createdBy.value = null // Reset creator filter
+            questions.value = getQuestionsByCreator(createdBy.value)
+          } catch (error) {
+            console.error('Error fetching all questions:', error)
+          }
           if (questions.value.length === 0) {
             questions.value = allQuestions.value
           }
