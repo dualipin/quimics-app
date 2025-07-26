@@ -28,7 +28,12 @@ export const gamesRoutes: RouteRecordRaw[] = [
       {
         path: 'lottery',
         name: 'games.lottery',
-        component: () => import('@/modules/games/modules/lottery/views/LotteryGame.vue'),
+        component: () => import('@/modules/games/modules/lottery/views/Home.vue'),
+      },
+      {
+        path: 'lottery/game',
+        name: 'games.lottery.game',
+        component: () => import('@/modules/games/modules/lottery/views/Game.vue'),
       },
       {
         path: 'quiz',
