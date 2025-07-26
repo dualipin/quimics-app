@@ -98,7 +98,7 @@
           <!-- Culebrita -->
           <GameCard
             title="Culebrita Atómica"
-            description="Controla una serpiente de electrones y recolecta partículas"
+            description="Controla una serpiente y forma compuestos químicos al recolectar elementos para ganar puntos"
             icon="🐍"
             color="from-green-500 to-emerald-600"
             :delay="0.4"
@@ -112,17 +112,17 @@
             icon="⚛️"
             color="from-red-500 to-pink-600"
             :delay="0.5"
-            @click="navigateTo('compuestos')"
+            @click="$router.push({ name: 'games.constructor' })"
           />
 
-          <!-- Mario Bross -->
+          <!-- Visor de moléculas -->
           <GameCard
-            title="Mario Químico"
-            description="Salta entre orbitales atómicos en esta aventura estilo plataforma"
-            icon="👨‍🔬"
+            title="Visor de Moléculas"
+            description="Explora y visualiza estructuras moleculares en 3D"
+            icon="🔬"
             color="from-yellow-400 to-red-500"
             :delay="0.6"
-            @click="navigateTo('mario')"
+            @click="navigateTo('visor')"
           />
         </div>
       </div>
