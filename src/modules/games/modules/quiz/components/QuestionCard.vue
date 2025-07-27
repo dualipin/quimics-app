@@ -25,7 +25,11 @@
 
       <div ref="headerRight" class="flex items-center space-x-3">
         <span class="text-sm font-medium text-gray-500 dark:text-gray-400">
-          {{ currentQuestion?.created_by }}
+          {{
+            currentQuestion?.created_by === 'system'
+              ? 'Pregunta del sistema'
+              : currentQuestion?.created_by
+          }}
         </span>
         <HintButton
           v-if="hasHintAvailable"
