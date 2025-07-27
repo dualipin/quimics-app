@@ -1,18 +1,26 @@
 <script setup lang="ts">
 import Aos from 'aos'
-import { onMounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 import { useThemeStore } from './stores'
 
-const { listenToChange } = useThemeStore()
+const themeStore = useThemeStore()
 
 onMounted(() => {
-  listenToChange()
-  setTimeout(() => window.HSStaticMethods.autoInit(), 100)
+  themeStore.listenToSystemChanges()
+
+  setTimeout(() => {
+    window.HSStaticMethods.autoInit()
+  }, 100)
+
   Aos.init({
     duration: 1000,
     easing: 'ease-in-out',
     once: true,
   })
+})
+
+onBeforeUnmount(() => {
+  themeStore.stopListeningToSystemChanges()
 })
 </script>
 

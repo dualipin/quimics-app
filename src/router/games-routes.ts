@@ -28,7 +28,32 @@ export const gamesRoutes: RouteRecordRaw[] = [
       {
         path: 'lottery',
         name: 'games.lottery',
-        component: () => import('@/modules/games/modules/lottery/views/LotteryGame.vue'),
+        component: () => import('@/modules/games/modules/lottery/views/Home.vue'),
+      },
+      {
+        path: 'lottery/game',
+        name: 'games.lottery.game',
+        component: () => import('@/modules/games/modules/lottery/views/Game.vue'),
+      },
+      {
+        path: 'snake',
+        name: 'games.snake',
+        component: () => import('@/modules/games/modules/snake/views/Snake.vue'),
+      },
+      {
+        path: 'composite-builder',
+        name: 'games.constructor',
+        component: () => import('@/modules/games/modules/composite-builder/views/Game.vue'),
+      },
+      {
+        path: 'molecule-viewer',
+        name: 'games.molecule-viewer',
+        component: () => import('@/modules/games/modules/molecule-viewer/views/Viewer.vue'),
+      },
+      {
+        path: 'mario',
+        name: 'games.mario',
+        component: () => import('@/modules/games/modules/mario/views/MarioGame.vue'),
       },
       {
         path: 'quiz',
@@ -38,11 +63,6 @@ export const gamesRoutes: RouteRecordRaw[] = [
             path: '',
             name: 'games.quiz',
             component: () => import('@/modules/games/modules/quiz/views/QuizGame.vue'),
-          },
-          {
-            path: 'shop',
-            name: 'games.quiz.shop',
-            component: () => import('@/modules/games/modules/quiz/views/QuizShop.vue'),
           },
         ],
       },

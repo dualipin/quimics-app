@@ -1,70 +1,32 @@
+<!-- src/views/GameView.vue -->
 <template>
-  <div class="container mx-auto max-w-4xl px-4 py-8">
-    <QuizProgress
-      class="mb-8"
-      :current-question="currentQuestionIndex"
-      :total-questions="questions.length"
-      :current-level="currentLevel"
-      :correct-answers="correctAnswersCount"
-    />
-
-    <Transition name="fade" mode="out-in">
-      <div v-if="currentQuestion" class="space-y-8">
-        <QuizCard :question="currentQuestion" @answer-selected="handleAnswer" />
-
-        <QuizStats class="mt-8" />
+  <div class="min-h-screen p-6">
+    <div class="mx-auto max-w-2xl">
+      <div class="mb-6 flex justify-between">
+        <LevelIndicator />
+        <CoinDisplay />
       </div>
 
-      <div v-else-if="levelCompleted" class="py-12 text-center">
-        <h2 class="mb-6 text-3xl font-bold dark:text-white">¡Nivel Completado!</h2>
-        <p class="mb-8 text-xl dark:text-gray-300">
-          Has ganado <span class="font-bold text-yellow-500">{{ levelReward }}</span> monedas
-        </p>
-        <button
-          @click="nextLevel"
-          class="rounded-full bg-indigo-600 px-6 py-3 font-medium text-white transition-colors hover:bg-indigo-700"
-        >
-          Siguiente Nivel
-        </button>
+      <QuestionCard v-if="currentQuestion" />
+      <div v-else class="py-10 text-center dark:text-gray-300">
+        <p class="text-lg">Cargando pregunta...</p>
       </div>
-    </Transition>
+
+      <StreakDisplay />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useQuiz } from '../composables/useQuizGame'
-import QuizCard from '../components/QuizCard.vue'
-import QuizProgress from '../components/QuizProgress.vue'
-import QuizStats from '../components/QuizStats.vue'
-import { onMounted } from 'vue'
-import Navbar from '../components/Navbar.vue'
+import { storeToRefs } from 'pinia'
+import { useQuizStore } from '../stores/quiz-store'
+import LevelIndicator from '../components/LevelIndicator.vue'
+import CoinDisplay from '../components/CoinDisplay.vue'
+import QuestionCard from '../components/QuestionCard.vue'
+import StreakDisplay from '../components/StreakDisplay.vue'
 
-const {
-  currentQuestion,
-  levelCompleted,
-  levelReward,
-  handleAnswer,
-  currentLevel,
-  nextLevel,
-  questions,
-  currentQuestionIndex,
-  correctAnswersCount,
-  initializeQuiz,
-} = useQuiz()
+const quizStore = useQuizStore()
+const { currentQuestion } = storeToRefs(quizStore)
 
-onMounted(async () => {
-  await initializeQuiz()
-})
+quizStore.loadQuestion()
 </script>
-
-<style>
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
-}
-</style>

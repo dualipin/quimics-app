@@ -28,15 +28,17 @@ npm run dev
 
 ## Que hace
 
-- [ ] Al iniciar sesión: Que pueda ingresar por correo y no por usuario, que si no recuerda su contraseña pueda recuperarla, que se pueda registrar si no tiene una cuenta
+- [x] Al iniciar sesión: Que pueda ingresar por correo y no por usuario, que si no recuerda su contraseña pueda recuperarla, que se pueda registrar si no tiene una cuenta
 - [x] Tabla periodica: Cambiar el audio (grabarlo alguien del equipo (opcional) ) darle más diseños, dar opción de modo oscuro o claro a la ventana emergente, cambiar el fondo de la tabla.
 - [x] Personajes: De la química y tabla periódica, que tenga información del personaje y audio donde lea su historia, esto aparecerá debajo de la tabla periódica o en un módulo como avatar o su foto, pero con animación. Cambiar los colores de los elementos de la tabla periódica y agregar en un apartado las reseñas( el Word que te mandare están los colores nuevos que llevara para que se pueda distinguir y las reseñas para anexar.
-- [ ] Preguntas: Niveles y ganar recompensas, que con las recompensas que vaya acumulando pueda comprar o adquirir preguntas malas, tanto en las preguntas estáticas por el sistema como las preguntas generadas por IA, serán 5 preguntas por niveles, darle más diseño a todo.
-- [ ] Loteria: Mas diseño, y que también puedan ganar recompensas, dinero para desbloquear aspectos de fondos o gorritos y recompensas de esa manera.
+- [x] Preguntas: Niveles y ganar recompensas, que con las recompensas que vaya acumulando pueda comprar o adquirir preguntas malas, tanto en las preguntas estáticas por el sistema como las preguntas generadas por IA, serán 5 preguntas por niveles, darle más diseño a todo.
+- [x] Loteria: Mas diseño, y que también puedan ganar recompensas, dinero para desbloquear aspectos de fondos o gorritos y recompensas de esa manera.
 - [x] Memorama: Numero de átomo, elemento, que grupo pertenece (12 cartas)
-- [ ] Culebrita: Formar grupos de elementos de la tabla periódica con 2 opciones, que aparezcan elementos de 2 grupos, pero tiene que seleccionar 1 de los grupos solicitados, si no pierde, con las recompensas que acumule podrá desbloquear aspectos y mapas.
-- [ ] Creación de compuestos: Darle más animación y mas diseño
+- [x] Culebrita: Formar grupos de elementos de la tabla periódica con 2 opciones, que aparezcan elementos de 2 grupos, pero tiene que seleccionar 1 de los grupos solicitados, si no pierde, con las recompensas que acumule podrá desbloquear aspectos y mapas.
+- [x] Creación de compuestos: Darle más animación y mas diseño
+- [x] Visor de moléculas.
 - [ ] Mario broos: Nivel avanzando, formulación de compuestos, que pueda elegir a su jugador en este caso serán los personajes relacionados a la química o creador de la tabla periodica.
+
 
 ORDEN DE LOS JUEGOS
 
