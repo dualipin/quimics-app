@@ -124,6 +124,16 @@
             :delay="0.6"
             @click="$router.push({ name: 'games.molecule-viewer' })"
           />
+
+          <!-- Mario  -->
+          <GameCard
+            title="Mario Químico"
+            description="Acompaña a Mario en una aventura para recolectar elementos y salvar el reino"
+            icon="🍄"
+            color="from-blue-700 to-indigo-800"
+            :delay="0.7"
+            @click="$router.push({ name: 'games.mario' })"
+          />
         </div>
       </div>
     </section>

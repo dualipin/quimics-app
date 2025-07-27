@@ -10,7 +10,7 @@ import { ArrowLeft } from 'lucide-vue-next'
     >
       <RouterLink
         :to="{ name: 'games' }"
-        class="flex items-center gap-2 text-lg font-bold dark:text-white"
+        class="flex items-center gap-2 text-lg font-bold text-black dark:text-white"
       >
         <ArrowLeft /> Quimics Games Menu
       </RouterLink>

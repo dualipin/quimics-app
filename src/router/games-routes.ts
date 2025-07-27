@@ -51,6 +51,11 @@ export const gamesRoutes: RouteRecordRaw[] = [
         component: () => import('@/modules/games/modules/molecule-viewer/views/Viewer.vue'),
       },
       {
+        path: 'mario',
+        name: 'games.mario',
+        component: () => import('@/modules/games/modules/mario/views/MarioGame.vue'),
+      },
+      {
         path: 'quiz',
         component: () => import('@/modules/games/modules/quiz/layouts/QuizLayout.vue'),
         children: [
