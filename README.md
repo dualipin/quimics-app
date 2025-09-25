@@ -41,9 +41,6 @@ npm run dev
 - [x] Culebrita: Formar grupos de elementos de la tabla periódica con 2 opciones, que aparezcan elementos de 2 grupos, pero tiene que seleccionar 1 de los grupos solicitados, si no pierde, con las recompensas que acumule podrá desbloquear aspectos y mapas.
 - [x] Creación de compuestos: Darle más animación y mas diseño
 - [x] Visor de moléculas.
-<<<<<<< HEAD
-- [x] Mario broos: Nivel avanzando, formulación de compuestos, que pueda elegir a su jugador en este caso serán los personajes relacionados a la química o creador de la tabla periodica.
-=======
 - [ ] Mario broos: Nivel avanzando, formulación de compuestos, que pueda elegir a su jugador en este caso serán los personajes relacionados a la química o creador de la tabla periodica.
 
 >>>>>>> f074b32 (initial commit)
