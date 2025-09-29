@@ -39,7 +39,7 @@
       ></div>
 
       <p class="text-sm text-gray-400">
-        Por favor, utiliza una tablet o computadora para disfrutar del juego.
+        Por favor, utiliza una tablet o computadora con teclado para disfrutar del juego.
       </p>
 
       <!-- Botón opcional para cerrar (si es necesario) -->
