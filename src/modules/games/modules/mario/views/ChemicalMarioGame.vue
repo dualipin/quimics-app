@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import GameCanvas from '../components/GameCanvas.vue'
+import ScreenDanger from '@/modules/games/modules/snake/components/ScreenDanger.vue'
 import { type CharacterKey } from '../types/Character'
 const character = ref<CharacterKey>('antoine') // Default character
 const currentDifficulty = ref(1) // Default difficulty
@@ -11,6 +12,7 @@ const reload = () => {
 </script>
 
 <template>
+  <ScreenDanger />
   <section class="flex flex-1 flex-col">
     <!-- Header with improved design -->
     <div class="bg-gradient-to-r from-cyan-600 via-blue-600 to-sky-600 shadow-xl">
