@@ -28,7 +28,7 @@ const footerLinks = ref([
             <span class="mr-2 text-2xl">
               <img :src="logo" alt="ChemPlay Logo" class="size-20 rounded-full" />
             </span>
-            <span class="text-2xl font-bold text-white">Studying Chemistry</span>
+            <span class="text-2xl font-bold text-white"> Quimics App </span>
           </div>
           <p class="mb-6 text-gray-400">
             Transformando el aprendizaje de química a través de la gamificación y tecnología
