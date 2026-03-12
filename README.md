@@ -1,4 +1,4 @@
-# Quimic App
+# Quimics App
 
 Juegos para aprender química y divertirse
 
@@ -38,7 +38,6 @@ npm run dev
 - [x] Creación de compuestos: Darle más animación y mas diseño
 - [x] Visor de moléculas.
 - [x] Mario broos: Nivel avanzando, formulación de compuestos, que pueda elegir a su jugador en este caso serán los personajes relacionados a la química o creador de la tabla periodica.
-
 
 ORDEN DE LOS JUEGOS
 

@@ -41,11 +41,6 @@ export const landingRoutes: RouteRecordRaw[] = [
           label: 'Repaso de la Tabla Periódica',
         },
       },
-      {
-        path: 'how-it-works',
-        name: 'how-it-works',
-        component: () => import('@/modules/landing/view/HowItWorks.vue'),
-      },
     ],
   },
 ]

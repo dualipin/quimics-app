@@ -37,11 +37,15 @@ watch(
     >
       <RouterLink
         to="/"
-        class="flex-none font-semibold focus:opacity-80 focus:outline-hidden xl:order-1 dark:text-white"
+        class="flex flex-none items-center gap-2 font-semibold focus:opacity-80 focus:outline-hidden xl:order-1 dark:text-white"
         href="#"
       >
-        <img :src="logo" alt="logo app" class="inline size-10" />
-        <span> Studying Chemistry </span>
+        <img
+          :src="logo"
+          alt="logo app"
+          class="inline size-10 rounded-full border-2 border-gray-200 dark:border-neutral-700"
+        />
+        <span> Quimics App </span>
       </RouterLink>
       <div class="flex items-center gap-x-2 xl:order-3">
         <button
