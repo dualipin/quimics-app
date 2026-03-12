@@ -1,4 +1,4 @@
-# Studying Chemistry
+# Quimic App
 
 Juegos para aprender química y divertirse
 
